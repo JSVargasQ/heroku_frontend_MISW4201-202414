@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Carrera } from '../carrera';
 import { CarreraService } from '../carrera.service';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-carrera-detail',
@@ -11,10 +12,13 @@ import { CarreraService } from '../carrera.service';
 })
 export class CarreraDetailComponent implements OnInit {
 
+  helper = new JwtHelperService();
+
   @Input() carrera: Carrera;
 
   userId: number;
   token: string;
+  isAdmin: boolean = true
 
   constructor(
     private carreraService: CarreraService,
@@ -26,6 +30,8 @@ export class CarreraDetailComponent implements OnInit {
   ngOnInit() {
     this.userId = parseInt(this.router.snapshot.params.userId)
     this.token = this.router.snapshot.params.userToken
+
+    this.isAdmin = this.helper.decodeToken(this.token)["rol"] === "Admin";
   }
 
   getCompetidor(id_competidor: any) {

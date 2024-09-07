@@ -1,38 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { JwtHelperService } from "@auth0/angular-jwt";
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { UsuarioService } from '../usuario.service';
 
 @Component({
   selector: 'app-usuario-login',
   templateUrl: './usuario-login.component.html',
-  styleUrls: ['./usuario-login.component.css']
+  styleUrls: ['./usuario-login.component.css'],
 })
 export class UsuarioLoginComponent implements OnInit {
-
   helper = new JwtHelperService();
 
-  constructor(
-    private usuarioService: UsuarioService,
-    private router: Router
-  ) { }
+  constructor(private usuarioService: UsuarioService, private router: Router) {}
 
-  error: boolean = false
+  error: boolean = false;
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onLogInUsuario(usuario: string, contrasena: string) {
-    this.error = false
+    this.error = false;
 
-    this.usuarioService.userLogIn(usuario, contrasena)
-      .subscribe(res => {
+    this.usuarioService.userLogIn(usuario, contrasena).subscribe(
+      (res) => {
         const decodedToken = this.helper.decodeToken(res.token);
-        this.router.navigate([`/carreras/${decodedToken.sub}/${res.token}`])
+        localStorage.setItem('userRole', res.rol);
+        this.router.navigate([`/carreras/${decodedToken.sub}/${res.token}`]);
       },
-        error => {
-          this.error = true
-        })
+      (error) => {
+        this.error = true;
+      }
+    );
   }
-
 }

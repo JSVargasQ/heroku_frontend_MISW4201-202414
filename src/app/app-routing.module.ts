@@ -10,6 +10,8 @@ import { CarreraListComponent } from './carrera/carrera-list/carrera-list.compon
 import { CarreraReportComponent } from './carrera/carrera-report/carrera-report.component';
 import { UsuarioLoginComponent } from './usuario/usuario-login/usuario-login.component';
 import { UsuarioSignupComponent } from './usuario/usuario-signup/usuario-signup.component';
+import { CuentaDetailComponent } from './cuenta/cuenta-detail/cuenta-detail.component';
+import { ApuestaCreateBettorComponent } from './apuesta/apuesta-create-bettor/apuesta-create-bettor.component';
 
 const routes: Routes = [
   {
@@ -48,6 +50,10 @@ const routes: Routes = [
     component: CarreraReportComponent
   },
   {
+    path: 'carreras/apostar/:carreraId/:userId/:userToken',
+    component: ApuestaCreateBettorComponent
+  },
+  {
     path: 'apuestas/:userId/:userToken',
     component: ApuestaListComponent
   },
@@ -58,6 +64,10 @@ const routes: Routes = [
   {
     path: 'apuestas/editar/:apuestaId/:userId/:userToken',
     component: ApuestaEditComponent
+  },
+  {
+    path: 'cuenta/:userId/:userToken',
+    component: CuentaDetailComponent
   }
 ];
 

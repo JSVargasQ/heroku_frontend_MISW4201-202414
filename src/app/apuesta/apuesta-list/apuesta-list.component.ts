@@ -82,7 +82,7 @@ export class ApuestaListComponent implements OnInit {
   buscarApuesta(busqueda: string) {
     let apuestasBusqueda: Array<Apuesta> = []
     this.apuestas.map(apuesta => {
-      if (apuesta.nombre_apostador.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())) {
+      if (apuesta.apostador.nombre.toLocaleLowerCase().includes(busqueda.toLocaleLowerCase())) {
         apuestasBusqueda.push(apuesta)
       }
     })

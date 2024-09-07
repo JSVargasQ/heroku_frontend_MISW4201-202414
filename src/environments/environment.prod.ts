@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backURL: "http://127.0.0.1:5000"
+  backURL: "https://eporra-backend-e0d3436b2e30.herokuapp.com/"
 };

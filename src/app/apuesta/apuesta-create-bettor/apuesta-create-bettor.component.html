@@ -5,7 +5,7 @@
       <div class="card mx-3 my-5">
         <div class="row">
           <div class="col-12 text-center">
-            <p class="mt-5 mb-2 fs-3 fw-bold">Crear apuesta</p>
+            <p class="mt-5 mb-2 fs-3 fw-bold">Apostar por "{{carrera.nombre_carrera}}"</p>
           </div>
         </div>
 
@@ -17,20 +17,9 @@
                 <label for="id_carrera">Carrera</label>
               </div>
               <div class="col-10">
-                <select formControlName="id_carrera" class="form-control" (change)="
-                  onCarreraSelect($event.target.value)">
-                  <option value="">Selecciona una carrera...</option>
-                  <option *ngFor="let item of carreras" value="{{ item.id }}">
-                    {{ item.nombre_carrera }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="col-8">
-                <div class="alert alert-danger my-3"
-                  *ngIf="apuestaForm.get('id_carrera')?.hasError('required') && apuestaForm.get('id_carrera')?.touched">
-                  Debe seleccionar la carrera
+                <div class="col-12">
+                  <input type="text" class="form-control" disabled id="race_name"
+                    value="{{ carrera.nombre_carrera }}">
                 </div>
               </div>
             </div>
@@ -55,36 +44,6 @@
                 <div class="alert alert-danger my-3"
                   *ngIf="apuestaForm.get('id_competidor')?.hasError('required') && apuestaForm.get('id_competidor')?.touched">
                   Debe seleccionar un competidor
-                </div>
-              </div>
-            </div>
-          </div>
-  
-          <div class="form-group my-2">
-            <div class="row">
-              <div class="col-2 text-start">
-                <label for="nombre_apostador">Apostador </label>
-              </div>
-              <div class="col-10">
-                <select formControlName="id_apostador" class="form-control">
-                  <option value="">Selecciona un apostador...</option>
-                  <option *ngFor="let item of apostadores" value="{{ item.id }}">
-                    {{ item.nombres + ' ' + item.apellidos }}
-                  </option>
-                </select>
-              </div>
-            </div>
-            <div class="row justify-content-center">
-              <div class="col-8">
-                <div class="alert alert-danger my-3"
-                  *ngIf="apuestaForm.get('nombre_apostador')?.hasError('required') && apuestaForm.get('nombre_apostador')?.touched">
-                  Debe ingresar el nombre del apostador
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="apuestaForm.get('nombre_apostador')?.hasError('minlength')">
-                  El nombre del apostador debe tener por lo menos un carácter
-                </div>
-                <div class="alert alert-danger my-3" *ngIf="apuestaForm.get('nombre_apostador')?.hasError('maxlength')">
-                  El nombre del apostador no debe exceder los 128 carácteres
                 </div>
               </div>
             </div>

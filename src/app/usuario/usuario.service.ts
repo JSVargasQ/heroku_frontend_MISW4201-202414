@@ -16,7 +16,15 @@ export class UsuarioService {
         return this.http.post<any>(`${this.backUrl}/login`, { "usuario": usuario, "contrasena": contrasena });
     }
 
-    userSignUp(usuario: string, contrasena: string): Observable<any> {
-        return this.http.post<any>(`${this.backUrl}/signin`, { "usuario": usuario, "contrasena": contrasena })
+    userSignUp(body: any): Observable<any> {
+        return this.http.post<any>(`${this.backUrl}/signin`, body)
+    }
+
+    getApostadores(token: string): Observable<any> {
+        return this.http.get<any>(`${this.backUrl}/apostadores`, { headers: { 'Authorization': `Bearer ${token}` } })
+    }
+
+    getUserTransactions(usuario: number, token: string): Observable<any> {
+        return this.http.get<any>(`${this.backUrl}/usuario/${usuario}/transacciones`, { headers: { 'Authorization': `Bearer ${token}` } })
     }
 }

@@ -6,6 +6,8 @@ import { Carrera, Competidor } from 'src/app/carrera/carrera';
 import { CarreraService } from 'src/app/carrera/carrera.service';
 import { Apuesta } from '../apuesta';
 import { ApuestaService } from '../apuesta.service';
+import { Usuario } from 'src/app/usuario/usuario';
+import { UsuarioService } from 'src/app/usuario/usuario.service';
 
 @Component({
   selector: 'app-apuesta-edit',
@@ -20,10 +22,12 @@ export class ApuestaEditComponent implements OnInit {
   apuestaForm!: FormGroup;
   carreras: Array<Carrera>
   competidores: Array<Competidor>
+  apostadores: Array<Usuario>
 
   constructor(
     private apuestaService: ApuestaService,
     private carreraService: CarreraService,
+    private usuarioService: UsuarioService,
     private formBuilder: FormBuilder,
     private router: ActivatedRoute,
     private routerPath: Router,
@@ -34,7 +38,7 @@ export class ApuestaEditComponent implements OnInit {
     this.apuestaForm = new FormGroup({
       id_carrera: new FormControl(),
       id_competidor: new FormControl(),
-      nombre_apostador: new FormControl(),
+      id_apostador: new FormControl(),
       valor_apostado: new FormControl()
     });
   }  
@@ -52,10 +56,11 @@ export class ApuestaEditComponent implements OnInit {
           this.apuestaForm = this.formBuilder.group({
             id_carrera: [apuesta.id_carrera, [Validators.required]],
             id_competidor: [apuesta.id_competidor, [Validators.required]],
-            nombre_apostador: [apuesta.nombre_apostador, [Validators.required, Validators.minLength(1), Validators.maxLength(128)]],
+            id_apostador: [apuesta.apostador.id, [Validators.required]],
             valor_apostado: [Number(apuesta.valor_apostado).toFixed(2), [Validators.required]]
           })
           this.getCarreras(apuesta.id_carrera)
+          this.getApostadores()
         })
     }
   }
@@ -101,6 +106,29 @@ export class ApuestaEditComponent implements OnInit {
         this.routerPath.navigate([`/apuestas/${this.userId}/${this.token}`])
       },
         error => {
+          if (error.statusText === "UNAUTHORIZED") {
+            this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
+          }
+          else if (error.statusText === "BAD REQUEST") {
+            this.showError("No tiene suficiente saldo para realizar esta apuesta.")
+          }
+          else if (error.statusText === "UNPROCESSABLE ENTITY") {
+            this.showError("No hemos podido identificarlo, por favor vuelva a iniciar sesión.")
+          }
+          else {
+            this.showError("Ha ocurrido un error. " + error.message)
+          }
+        })
+  }
+
+  
+  getApostadores() {
+    this.usuarioService.getApostadores(this.token)
+      .subscribe(apostadores => {
+        this.apostadores = apostadores
+      },
+        error => {
+          console.log(error)
           if (error.statusText === "UNAUTHORIZED") {
             this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
           }

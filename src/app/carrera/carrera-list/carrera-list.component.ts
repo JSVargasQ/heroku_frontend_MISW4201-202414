@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from "ngx-toastr";
 import { Carrera } from '../carrera';
 import { CarreraService } from '../carrera.service';
+import { JwtHelperService } from "@auth0/angular-jwt";
 
 @Component({
   selector: 'app-carrera-list',
@@ -10,6 +11,8 @@ import { CarreraService } from '../carrera.service';
   styleUrls: ['./carrera-list.component.css']
 })
 export class CarreraListComponent implements OnInit {
+
+  helper = new JwtHelperService();
 
   constructor(
     private carreraService: CarreraService,
@@ -24,6 +27,7 @@ export class CarreraListComponent implements OnInit {
   mostrarCarreras: Array<Carrera>
   carreraSeleccionada: Carrera
   indiceSeleccionado: number
+  isAdmin: boolean = true
 
   ngOnInit() {
     if (!parseInt(this.router.snapshot.params.userId) || this.router.snapshot.params.userToken === " ") {
@@ -32,6 +36,8 @@ export class CarreraListComponent implements OnInit {
     else {
       this.userId = parseInt(this.router.snapshot.params.userId)
       this.token = this.router.snapshot.params.userToken
+      this.isAdmin = this.helper.decodeToken(this.token)["rol"] === "Admin";
+
       this.getCarreras();
     }
   }
@@ -46,7 +52,6 @@ export class CarreraListComponent implements OnInit {
         }
       },
         error => {
-          console.log(error)
           if (error.statusText === "UNAUTHORIZED") {
             this.showWarning("Su sesión ha caducado, por favor vuelva a iniciar sesión.")
           }

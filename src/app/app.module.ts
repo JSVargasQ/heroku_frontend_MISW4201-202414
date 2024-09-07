@@ -10,11 +10,10 @@ import { AppComponent } from './app.component';
 import { ApuestaModule } from './apuesta/apuesta.module';
 import { CarreraModule } from './carrera/carrera.module';
 import { UsuarioModule } from './usuario/usuario.module';
-
+import { CuentaModule } from './cuenta/cuenta.module';
+//Test comment
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,14 +22,15 @@ import { UsuarioModule } from './usuario/usuario.module';
     CarreraModule,
     ApuestaModule,
     AppHeaderModule,
+    CuentaModule,
     ToastrModule.forRoot({
       timeOut: 7000,
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

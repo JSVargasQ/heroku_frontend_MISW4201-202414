@@ -1,20 +1,22 @@
+import { Usuario } from "../usuario/usuario";
+
 export class Apuesta {
     id: number;
     valor_apostado: number;
-    nombre_apostador: string;
+    apostador: Usuario;
     id_competidor: number;
     id_carrera: number;
 
     constructor(
         id: number,
         valor_apostado: number,
-        nombre_apostador: string,
+        apostador: Usuario,
         id_competidor: number,
         id_carrera: number
     ) {
         this.id = id,
             this.valor_apostado = valor_apostado,
-            this.nombre_apostador = nombre_apostador,
+            this.apostador = apostador,
             this.id_competidor = id_competidor,
             this.id_carrera = id_carrera
     }

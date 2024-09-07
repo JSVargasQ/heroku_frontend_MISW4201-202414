@@ -66,8 +66,12 @@
                 <label for="nombre_apostador">Apostador </label>
               </div>
               <div class="col-10">
-                <input type="text" class="form-control" formControlName="nombre_apostador"
-                  placeholder="Nombre del apostador">
+                <select formControlName="id_apostador" class="form-control">
+                  <option value="">Selecciona un apostador...</option>
+                  <option *ngFor="let item of apostadores" value="{{ item.id }}">
+                    {{ item.nombres + ' ' + item.apellidos }}
+                  </option>
+                </select>
               </div>
             </div>
             <div class="row justify-content-center">

@@ -13,3 +13,22 @@ export class Usuario {
         this.albumes = albumes
     }
 }
+
+export class Transaccion {
+    id: number;
+    tipo: string;
+    fecha_creacion: string;
+    valor: number;
+
+    constructor(
+        id: number,
+        tipo: string,
+        fecha_creacion: string,
+        valor: number
+    ) {
+        this.id = id;
+        this.tipo = tipo;
+        this.fecha_creacion = fecha_creacion;
+        this.valor = valor;
+    }
+}
